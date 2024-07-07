@@ -58,7 +58,7 @@ This project is designed to help developers create valid Elasticsearch queries b
     ```bash
     OPENAI_API_KEY='your-api-key'
     ELASTICSEARCH_URL='your-elasticsearch-url'
-    ELASTICSEARCH_API_KEY='your-elasticsearch-url'
+    ELASTICSEARCH_API_KEY='your-elasticsearch-api-key'
     ```
 ## Usage
 
