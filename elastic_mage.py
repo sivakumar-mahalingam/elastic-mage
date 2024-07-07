@@ -1,27 +1,29 @@
 import warnings
 import json
 import os
+from dotenv import load_dotenv
 from elasticsearch import Elasticsearch
 from langchain_community.document_loaders import JSONLoader
 from langchain_community.embeddings import SentenceTransformerEmbeddings
 from langchain_community.vectorstores import Chroma
-
 from langchain_openai import OpenAI
 from langchain.prompts import PromptTemplate
 from langchain_core.runnables import RunnableSequence
 
 warnings.filterwarnings('ignore')
 
+load_dotenv()
+
 es = Elasticsearch(
-    "https://40ade03392534b2fa513b76bc9e2f258.us-central1.gcp.cloud.es.io:443",
-    api_key="ZTZHUmc1QUJxWktHaU5CN2xYWlo6R05YNHY3ZTRRVTIteUNxZEkyRG92QQ=="
+    os.getenv('ELASTICSEARCH_URL'),
+    api_key=os.getenv('ELASTICSEARCH_API_KEY')
 )
 
 mappings_file_path = "index_mappings.json"
 
 embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 
-llm = OpenAI(api_key="sk-proj-6nuCVhND795UGrjQEaq7T3BlbkFJUpKgw1HMa32Rbnz3p76O")
+llm = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
 
 def get_index_mappings(index_pattern):
@@ -103,9 +105,9 @@ def main():
     prompt = PromptTemplate(template=template, input_variables=["mapping", "question"])
     sequence = RunnableSequence(prompt, llm)
 
-    # question = "Find all movies acted by Robert Downey Jr"
-    question = "Find all movies which has Gangster in its name"
+    question = input("Enter what elastic query to be formed:")
     es_query = sequence.invoke({"mapping": retriever, "question": question})
+
     print(es_query)
 
 

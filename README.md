@@ -27,9 +27,9 @@ This project is designed to help developers create valid Elasticsearch queries b
 
 ### Prerequisites
 
-- Python 3.7 or higher
-- OpenAI API Key
-- Elastic instance
+- `Python 3.7 or higher`
+- `OpenAI API Key`
+- `Elastic instance`
 
 ### Installation
 
@@ -53,59 +53,49 @@ This project is designed to help developers create valid Elasticsearch queries b
     pip install -r requirements.txt
     ```
 
-4. Set your OpenAI API key as an environment variable:
+4. Create a `.env` file in the root directory to set your OpenAI API key and Elasticsearch details:
 
     ```bash
-    export OPENAI_API_KEY='your-api-key'
-    ```
-5. Set your Elasticsearch URL as an environment variable:
-
-    ```bash
-    export ELASTICSEARCH_URL='your-elasticsearch-url'
+    OPENAI_API_KEY='your-api-key'
+    ELASTICSEARCH_URL='your-elasticsearch-url'
+    ELASTICSEARCH_API_KEY='your-elasticsearch-url'
     ```
 ## Usage
 
-1. Update the `question` variable in `generate_query.py` with your natural language question.
-
-2. Run the script:
+1. Run the script:
 
     ```bash
     python generate_query.py
     ```
 
+2. Enter index pattern and elastic query needed:
+
+    ```bash
+    Enter index pattern (type 'all' for all indexes): omdb
+    Enter the kind of elastic query to be formed:Find all movies acted by Robert Downey Jr
+    ```
+
 3. The generated Elasticsearch query will be printed in the console.
 
-### Example
+   ```json
+   {
+     "query": {
+       "bool": {
+         "must": {
+           "match": {
+             "actors": "Robert Downey Jr"
+           }
+         }
+       }
+     }
+   }
+   ```
+   Since the question is "Find all movies acted by Robert Downey Jr" and "omdb" index mapping has a field called `actors`.
 
-Suppose your question is "Find all movies which has Gangster in its name" and your index mapping has a field called `title`. The script should output:
+## Contributing
 
-```json
-{
-  "query": {
-    "bool": {
-      "must": [
-        {
-          "match": {
-            "title": "Gangster"
-          }
-        }
-      ]
-    }
-  }
-}
-```
+Contributions are welcome! Please open an issue or submit a pull request for any bugs, features, or documentation improvements.
 
-Reference:
-https://python.langchain.com/v0.2/docs/templates/elastic-query-generator/
-https://github.com/sckott?tab=repositories
-https://docs.pinecone.io/models/overview
-https://docs.pinecone.io/examples/notebooks
-https://docs.pinecone.io/guides/get-started/quickstart
-https://www.pinecone.io/learn/vector-similarity/
-https://platform.openai.com/docs/models/gpt-4o
-https://platform.openai.com/docs/api-reference/streaming?lang=python
+## License
 
-ToDo:
-- [ ] Nested ES Schema
-- [ ] metadata_func in langchain document loaders
-- [ ] Implement RAG
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
