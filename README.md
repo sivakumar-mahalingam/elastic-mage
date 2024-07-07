@@ -1,6 +1,6 @@
 # ElasticMage
 
-ElasticMage is a tool that generates Elasticsearch queries using OpenAI's language models and LangChain. The project dynamically retrieves the index mapping from Elasticsearch, stores it in ChromaDB and uses this mapping to create accurate Elasticsearch queries based on user input questions.
+ElasticMage is a tool that generates Elasticsearch queries using OpenAI API and LangChain. The project dynamically retrieves the index mapping from Elasticsearch, stores it in ChromaDB and uses this mapping to create accurate Elasticsearch queries based on user input questions.
 
 ![elastic-mage.png](docs%2Felastic-mage.png)
 
