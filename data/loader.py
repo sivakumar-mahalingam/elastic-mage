@@ -1,9 +1,12 @@
 import json
+from dotenv import load_dotenv
 from elasticsearch import Elasticsearch, helpers
 
+load_dotenv()
+
 client = Elasticsearch(
-    "https://40ade03392534b2fa513b76bc9e2f258.us-central1.gcp.cloud.es.io:443",
-    api_key="ZTZHUmc1QUJxWktHaU5CN2xYWlo6R05YNHY3ZTRRVTIteUNxZEkyRG92QQ=="
+   os.getenv('ELASTICSEARCH_URL),
+    api_key=os.getenv('ELASTICSEARCH_API_KEY')
 )
 
 client.info()
