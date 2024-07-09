@@ -5,7 +5,7 @@ from elasticsearch import Elasticsearch, helpers
 load_dotenv()
 
 client = Elasticsearch(
-   os.getenv('ELASTICSEARCH_URL),
+    os.getenv('ELASTICSEARCH_URL),
     api_key=os.getenv('ELASTICSEARCH_API_KEY')
 )
 
